@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.DependencyInject.Autofac", "src\Misaka.Extensions\Misaka.DependencyInject.Autofac\Misaka.DependencyInject.Autofac.csproj", "{1EA99FD7-6388-4043-A9FA-1E0AABA6EF2A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{02FAEA41-A52F-4781-992B-8DCE5DA4D10C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.Sample.Web", "sample\Misaka.Sample.Web\Misaka.Sample.Web.csproj", "{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +27,17 @@ Global
 		{1EA99FD7-6388-4043-A9FA-1E0AABA6EF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EA99FD7-6388-4043-A9FA-1E0AABA6EF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EA99FD7-6388-4043-A9FA-1E0AABA6EF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1EA99FD7-6388-4043-A9FA-1E0AABA6EF2A} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
+		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD} = {02FAEA41-A52F-4781-992B-8DCE5DA4D10C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC0FDE98-1713-4C86-B12F-7A585EE9E496}

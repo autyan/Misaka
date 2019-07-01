@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using Misaka.DpendencyInjection;
 
-namespace Misaka.DpendencyInjection
+namespace Misaka.DependencyInjection
 {
     public class ObjectProviderFactory
     {
@@ -78,51 +79,25 @@ namespace Misaka.DpendencyInjection
             return Instance.ObjectProvider.GetService(type);
         }
 
-
-
         public static object GetService(Type type, string name)
         {
             return Instance.ObjectProvider.GetService(type, name);
-        }
-
-        public IObjectProviderBuilder RegisterInstance(Type type, object instance)
-        {
-            ObjectProviderBuilder.RegisterInstance(type, instance);
-            return ObjectProviderBuilder;
-        }
-
-        public IObjectProviderBuilder RegisterInstance(object instance)
-        {
-            ObjectProviderBuilder.RegisterInstance(instance.GetType(), instance);
-            return ObjectProviderBuilder;
-        }
-
-        public IObjectProviderBuilder RegisterType<TService>(Func<IObjectProvider, TService> implementationFactory, 
-                                                             ServiceLifetime lifetime = ServiceLifetime.Transient)
-            where TService : class
-        {
-            ObjectProviderBuilder.Register(implementationFactory, lifetime);
-            return ObjectProviderBuilder;
-        }
-
-        public IObjectProviderBuilder RegisterType<TService, TImplementation>(ServiceLifetime lifetime = ServiceLifetime.Transient)
-            where TService : class where TImplementation : class, TService
-        {
-            ObjectProviderBuilder.Register<TService, TImplementation>(lifetime);
-            return ObjectProviderBuilder;
-        }
-
-        public ObjectProviderFactory RegisterComponents(Action<IObjectProviderBuilder, ServiceLifetime> registerComponents,
-                                             ServiceLifetime lifetime = ServiceLifetime.Transient)
-        {
-            registerComponents(ObjectProviderBuilder, lifetime);
-            return Instance;
         }
 
         public ObjectProviderFactory Populate(IServiceCollection services)
         {
             ObjectProviderBuilder.Populate(services);
             return this;
+        }
+
+        public IObjectProviderBuilder RegisterInstance(object instance)
+        {
+            return ObjectProviderBuilder.RegisterInstance(instance);
+        }
+
+        public IObjectProviderBuilder RegisterInstance(Type type, object instance)
+        {
+            return ObjectProviderBuilder.RegisterInstance(type, instance);
         }
     }
 }

@@ -16,5 +16,13 @@ namespace Misaka.DpendencyInjection
         object GetService(Type type);
 
         object GetService(Type type, string name);
+
+        T GetRequiredService<T>(string name) where T : class;
+
+        T GetRequiredService<T>() where T : class;
+
+        object GetRequiredService(Type type);
+
+        object GetRequiredService(Type type, string name);
     }
 }

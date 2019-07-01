@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
-using Misaka.DpendencyInjection;
+using Misaka.DependencyInjection;
+using System;
+using System.Collections.Generic;
 
 namespace Misaka.Config
 {

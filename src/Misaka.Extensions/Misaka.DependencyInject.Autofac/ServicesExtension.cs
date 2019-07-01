@@ -1,4 +1,5 @@
 ﻿using Misaka.Config;
+using Misaka.DependencyInjection;
 using Misaka.DpendencyInjection;
 
 namespace Misaka.DependencyInject.Autofac

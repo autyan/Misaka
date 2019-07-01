@@ -70,5 +70,25 @@ namespace Misaka.DependencyInject.Autofac
             Scope.TryResolveNamed(name, type, out var instance);
             return instance;
         }
+
+        public T GetRequiredService<T>(string name) where T : class
+        {
+            return Scope.ResolveNamed<T>(name);
+        }
+
+        public T GetRequiredService<T>() where T : class
+        {
+            return Scope.Resolve<T>();
+        }
+
+        public object GetRequiredService(Type type)
+        {
+            return Scope.Resolve(type);
+        }
+
+        public object GetRequiredService(Type type, string name)
+        {
+            return Scope.ResolveNamed(name, type);
+        }
     }
 }

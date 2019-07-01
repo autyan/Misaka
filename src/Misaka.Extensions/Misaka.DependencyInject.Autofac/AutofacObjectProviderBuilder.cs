@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using Misaka.DependencyInjection;
 using Misaka.DpendencyInjection;
 
 namespace Misaka.DependencyInject.Autofac
@@ -20,59 +21,37 @@ namespace Misaka.DependencyInject.Autofac
             return new AutofacObjectProvider(_containerBuilder.Build());
         }
 
-        public IObjectProviderBuilder RegisterInstance(Type type, object instance)
-        {
-            _containerBuilder.RegisterInstance(type);
-
-            return this;
-        }
-
-        public IObjectProviderBuilder Register<TService>(Func<IObjectProvider, TService> implementationFactory,
-                                                         ServiceLifetime lifetime = ServiceLifetime.Transient) where TService : class
-        {
-            var registration = _containerBuilder.Register(context => implementationFactory.Invoke(Build()));
-            switch (lifetime)
-            {
-                case ServiceLifetime.Singleton:
-                    registration.SingleInstance();
-                    break;
-                case ServiceLifetime.Scoped:
-                    registration.InstancePerLifetimeScope();
-                    break;
-                case ServiceLifetime.Transient:
-                    registration.InstancePerDependency();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(lifetime), lifetime, null);
-            }
-            return this;
-        }
-
-        public IObjectProviderBuilder Register<TService, TImplementation>(ServiceLifetime lifetime = ServiceLifetime.Transient) 
-            where TService : class where TImplementation : class, TService
-        {
-            var registration = _containerBuilder.RegisterType<TService>().As<TImplementation>();
-            switch (lifetime)
-            {
-                case ServiceLifetime.Singleton:
-                    registration.SingleInstance();
-                    break;
-                case ServiceLifetime.Scoped:
-                    registration.InstancePerLifetimeScope();
-                    break;
-                case ServiceLifetime.Transient:
-                    registration.InstancePerDependency();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(lifetime), lifetime, null);
-            }
-            return this;
-        }
-
         public ObjectProviderFactory Populate(IServiceCollection services)
         {
             _containerBuilder.Populate(services);
             return ObjectProviderFactory.Instance;
+        }
+
+        public IObjectProviderBuilder RegisterInstance(object instance)
+        {
+            _containerBuilder.RegisterInstance(instance);
+            return this;
+        }
+
+        public IObjectProviderBuilder RegisterInstance(Type type, object instance)
+        {
+            _containerBuilder.RegisterInstance(instance).As(type);
+            return this;
+        }
+
+        public IObjectProviderBuilder RegisterNamed<T>(string name, ServiceLifetime serviceLifetime) where T : class
+        {
+            _containerBuilder.RegisterType<T>()
+                             .Named<T>(name)
+                             .InstancePerLifeTime(serviceLifetime);
+            return this;
+        }
+
+        public IObjectProviderBuilder Register<T>(ServiceLifetime serviceLifetime) where T : class
+        {
+            _containerBuilder.RegisterType<T>()
+                             .InstancePerLifeTime(serviceLifetime);
+            return this;
         }
     }
 }
