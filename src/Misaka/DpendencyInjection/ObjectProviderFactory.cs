@@ -97,7 +97,8 @@ namespace Misaka.DpendencyInjection
             return ObjectProviderBuilder;
         }
 
-        public IObjectProviderBuilder RegisterType<TService>(Func<IObjectProvider, TService> implementationFactory, ServiceLifetime lifetime = ServiceLifetime.Transient)
+        public IObjectProviderBuilder RegisterType<TService>(Func<IObjectProvider, TService> implementationFactory, 
+                                                             ServiceLifetime lifetime = ServiceLifetime.Transient)
             where TService : class
         {
             ObjectProviderBuilder.Register(implementationFactory, lifetime);

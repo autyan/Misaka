@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Misaka.DpendencyInjection;
 
-namespace Misaka.Configuration
+namespace Misaka.Config
 {
     public class Configuration
     {
