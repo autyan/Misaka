@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Misaka.DependencyInjection;
-using Misaka.DpendencyInjection;
 
 namespace Misaka.Sample.Web
 {
@@ -13,6 +12,7 @@ namespace Misaka.Sample.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Config.Configuration.Instance.UseConfiguration(configuration);
         }
 
         public IConfiguration Configuration { get; }

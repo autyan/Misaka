@@ -10,11 +10,11 @@ namespace Misaka.Config
     {
         public static Configuration Instance => new Configuration();
 
-        public IConfiguration ConfigurationCore { get; private set; } = new ConfigurationBuilder().Build();
+        public IConfiguration ConfigurationCore { get; private set; } 
 
         private Configuration()
         {
-
+            ConfigurationCore = new ConfigurationBuilder().Build();
         }
 
         public IConfigurationSection GetSection(string key)
