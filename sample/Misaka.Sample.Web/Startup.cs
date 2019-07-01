@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Misaka.Config;
+using Misaka.DependencyInject.Autofac;
 using Misaka.DependencyInjection;
 
 namespace Misaka.Sample.Web
@@ -12,7 +14,10 @@ namespace Misaka.Sample.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Config.Configuration.Instance.UseConfiguration(configuration);
+            Config.Configuration.Instance
+                  .UseAutofac()
+                  .UseConfiguration(configuration)
+                  .LoadComponent(nameof(Misaka));
         }
 
         public IConfiguration Configuration { get; }

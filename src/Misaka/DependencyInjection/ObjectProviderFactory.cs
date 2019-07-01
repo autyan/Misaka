@@ -5,7 +5,7 @@ namespace Misaka.DependencyInjection
 {
     public class ObjectProviderFactory
     {
-        public static ObjectProviderFactory Instance => new ObjectProviderFactory();
+        public static ObjectProviderFactory Instance { get; } = new ObjectProviderFactory();
 
         private ObjectProviderFactory()
         {

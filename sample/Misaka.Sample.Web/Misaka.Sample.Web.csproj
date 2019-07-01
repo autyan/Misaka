@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.DependencyInject.Autofac\Misaka.DependencyInject.Autofac.csproj" />
     <ProjectReference Include="..\..\src\Misaka\Misaka.csproj" />
   </ItemGroup>
 
