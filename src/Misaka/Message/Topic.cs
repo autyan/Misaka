@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Misaka.Message.Topics
+namespace Misaka.Message
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class Topic : Attribute

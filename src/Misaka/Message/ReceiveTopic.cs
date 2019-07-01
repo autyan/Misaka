@@ -1,4 +1,4 @@
-﻿namespace Misaka.Message.Topics
+﻿namespace Misaka.Message
 {
     public class ReceiveTopic : Topic
     {
