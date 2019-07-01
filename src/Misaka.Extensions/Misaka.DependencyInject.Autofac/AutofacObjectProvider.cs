@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Misaka.DpendencyInjection;
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Misaka.DependencyInjection;
 
 namespace Misaka.DependencyInject.Autofac
 {

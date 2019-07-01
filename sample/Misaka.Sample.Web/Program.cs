@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
+using System;
+using System.Threading.Tasks;
 
 namespace Misaka.Sample.Web
 {

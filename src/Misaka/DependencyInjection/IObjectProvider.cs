@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Misaka.DpendencyInjection
+namespace Misaka.DependencyInjection
 {
     public interface IObjectProvider
     {

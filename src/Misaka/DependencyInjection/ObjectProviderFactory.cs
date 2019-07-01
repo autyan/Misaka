@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Misaka.DpendencyInjection;
 
 namespace Misaka.DependencyInjection
 {

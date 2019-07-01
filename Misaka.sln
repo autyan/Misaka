@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.DependencyInject.Aut
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{02FAEA41-A52F-4781-992B-8DCE5DA4D10C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.Sample.Web", "sample\Misaka.Sample.Web\Misaka.Sample.Web.csproj", "{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.Sample.Web", "sample\Misaka.Sample.Web\Misaka.Sample.Web.csproj", "{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.Message.InMemory", "src\Misaka.Extensions\Misaka.Message.InMemory\Misaka.Message.InMemory.csproj", "{BA4EA675-45E6-4169-9044-CEFF8043A29A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4EA675-45E6-4169-9044-CEFF8043A29A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4EA675-45E6-4169-9044-CEFF8043A29A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4EA675-45E6-4169-9044-CEFF8043A29A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4EA675-45E6-4169-9044-CEFF8043A29A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1EA99FD7-6388-4043-A9FA-1E0AABA6EF2A} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD} = {02FAEA41-A52F-4781-992B-8DCE5DA4D10C}
+		{BA4EA675-45E6-4169-9044-CEFF8043A29A} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC0FDE98-1713-4C86-B12F-7A585EE9E496}

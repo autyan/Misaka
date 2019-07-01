@@ -3,7 +3,6 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Misaka.DependencyInjection;
-using Misaka.DpendencyInjection;
 
 namespace Misaka.DependencyInject.Autofac
 {
