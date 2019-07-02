@@ -36,5 +36,10 @@ namespace Misaka.Config
         {
             return _loadedTypes.Values.Where(predicate).ToArray();
         }
+
+        public KeyValuePair<Type, TypeInfo>[] FindTypeWithInfos(Func<KeyValuePair<Type, TypeInfo>, bool> predicate)
+        {
+            return _loadedTypes.Where(predicate).ToArray();
+        }
     }
 }

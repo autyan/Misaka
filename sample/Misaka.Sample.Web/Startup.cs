@@ -27,11 +27,11 @@ namespace Misaka.Sample.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            ObjectProviderFactory.Instance.Populate(services);
+            ObjectProviderFactory.Instance.Populate(services).Build();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
             if (env.IsDevelopment())
             {
@@ -39,6 +39,8 @@ namespace Misaka.Sample.Web
             }
 
             app.UseMvc();
+
+            applicationLifetime.ApplicationStarted.Register(() => { });
         }
     }
 }

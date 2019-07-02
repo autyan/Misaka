@@ -90,5 +90,10 @@ namespace Misaka.DependencyInject.Autofac
         {
             return Scope.ResolveNamed(name, type);
         }
+
+        public void Dispose()
+        {
+            Scope.Dispose();
+        }
     }
 }

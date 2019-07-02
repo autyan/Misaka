@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Misaka.DependencyInjection
 {
-    public interface IObjectProvider
+    public interface IObjectProvider : IDisposable
     {
         IObjectProvider CreateScope();
 
