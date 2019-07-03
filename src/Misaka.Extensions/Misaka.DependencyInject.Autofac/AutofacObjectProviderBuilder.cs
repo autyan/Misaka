@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,10 +15,25 @@ namespace Misaka.DependencyInject.Autofac
         {
             if (serviceCollection != null)
             {
-                _containerBuilder.Populate(serviceCollection);
+                Populate(serviceCollection);
             }
 
-            return new AutofacObjectProvider(_containerBuilder.Build());
+            _containerBuilder.Register<IObjectProvider>(context =>
+                                                        {
+                                                            var serviceProvider = context.Resolve<IServiceProvider>() as AutofacServiceProvider;
+                                                            var componentContextField = typeof(AutofacServiceProvider).GetField("_lifetimeScope",
+                                                                                                                                BindingFlags.NonPublic |
+                                                                                                                                BindingFlags.Instance);
+                                                            if (componentContextField?.GetValue(serviceProvider) is ILifetimeScope lifetimeScope)
+                                                            {
+                                                                return new AutofacObjectProvider(lifetimeScope);
+                                                            }
+                                                            throw new Exception("Autofac ServiceProvider not exists!");
+                                                        })
+                             .InstancePerLifetimeScope();
+            var objectProvider = new AutofacObjectProvider();
+            objectProvider.SetLifetimeScope(_containerBuilder.Build());
+            return objectProvider;
         }
 
         public ObjectProviderFactory Populate(IServiceCollection services)

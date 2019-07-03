@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Misaka.Config;
 using Misaka.DependencyInject.Autofac;
 using Misaka.DependencyInjection;
+using Misaka.MessageQueue;
+using Misaka.MessageQueue.InMemory;
 
 namespace Misaka.Sample.Web
 {
@@ -17,17 +20,22 @@ namespace Misaka.Sample.Web
             Config.Configuration.Instance
                   .UseAutofac()
                   .UseConfiguration(configuration)
-                  .LoadComponent(nameof(Misaka));
+                  .LoadComponent(nameof(Misaka))
+                  .UseInMemoryQueue();
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+                            {
+                                options.InputFormatters.Insert(0, new RawRequestBodyInputFormatter());
+                            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMemoryCache();
 
-            ObjectProviderFactory.Instance.Populate(services).Build();
+            return ObjectProviderFactory.Instance.Populate(services).Build();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +48,12 @@ namespace Misaka.Sample.Web
 
             app.UseMvc();
 
-            applicationLifetime.ApplicationStarted.Register(() => { });
+            applicationLifetime.ApplicationStarted.Register(async () => {
+                                                                await MessageQueueFactory.Instance.StartAsync(new ConsumerOption
+                                                                                                              {
+                                                                                                                  Topics = "Test"
+                                                                                                              });
+                                                            });
         }
     }
 }

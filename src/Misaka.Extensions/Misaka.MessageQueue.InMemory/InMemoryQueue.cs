@@ -1,6 +1,7 @@
 ﻿using Misaka.DependencyInjection;
 using Misaka.Message;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,31 +37,34 @@ namespace Misaka.MessageQueue.InMemory
                                  });
         }
 
-        public override void Start()
+        public override void Start(ConsumerOption option)
         {
-            StartConsume();
+            StartConsume(option);
         }
 
-        public override Task StartAsync()
+        public override Task StartAsync(ConsumerOption option)
         {
-            StartConsume();
+            StartConsume(option);
             return Task.CompletedTask;
         }
 
-        private void StartConsume()
+        private void StartConsume(ConsumerOption option)
         {
             Task.Factory.StartNew(async () =>
                                   {
+                                      var consumedTopics = option.Topics.Split(',');
                                       while (true)
                                       {
                                           if (MessageQueue.TryDequeue(out var message))
                                           {
-                                              await HandleMessageAsync(() => new MessageHandleContext
-                                                                             {
-                                                                                 Topic       = message.Topic,
-                                                                                 Message     = message.Message,
-                                                                                 MessageType = message.Message.GetType()
-                                                                             });
+                                              if (!consumedTopics.Contains(message.Topic)) continue;
+
+                                              var context = new MessageHandleContext
+                                                            {
+                                                                Topic       = message.Topic,
+                                                                Message     = message.Message
+                                                            };
+                                              await HandleMessageAsync(() => context);
                                           }
                                           Thread.Sleep(100);
                                       }

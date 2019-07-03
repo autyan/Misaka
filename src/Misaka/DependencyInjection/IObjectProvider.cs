@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Misaka.DependencyInjection
 {
-    public interface IObjectProvider : IDisposable
+    public interface IObjectProvider : IServiceProvider, IDisposable
     {
         IObjectProvider CreateScope();
 
@@ -12,8 +12,6 @@ namespace Misaka.DependencyInjection
         T GetService<T>(string name) where T : class;
 
         T GetService<T>() where T : class;
-
-        object GetService(Type type);
 
         object GetService(Type type, string name);
 

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Misaka.MessageQueue;
 
 namespace Misaka.Sample.Web.Controllers
 {
@@ -10,18 +9,32 @@ namespace Misaka.Sample.Web.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly IMemoryCache _cache;
+        private readonly IMessageBus _bus;
+
+        public ValuesController(IMemoryCache cache,
+                                IMessageBus  bus)
+        {
+            _cache = cache;
+            _bus   = bus;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            if (_cache.TryGetValue(id, out var value))
+            {
+                return value.ToString();
+            }
+            return "no value";
         }
 
         // POST api/values
@@ -34,6 +47,11 @@ namespace Misaka.Sample.Web.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            _bus.Publish(new ValueEvent
+                         {
+                             Id    = id,
+                             Value = value
+                         });
         }
 
         // DELETE api/values/5

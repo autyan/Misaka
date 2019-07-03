@@ -34,7 +34,8 @@ namespace Misaka.MessageQueue
 
         protected virtual async Task ProcessAsync(MessageHandleContext handleContext)
         {
-            var handlerTypes = Provider.LookupHandlerTypes(handleContext.MessageType);
+            var messageType = handleContext.Message.GetType();
+            var handlerTypes = Provider.LookupHandlerTypes(messageType);
 
             using (ObjectProvider.CreateScope())
             {
@@ -46,7 +47,7 @@ namespace Misaka.MessageQueue
                                        {
                                            MessageHandler = handlerType
                                        };
-                    var method   = handlerType.GetMethod("HandleAsync", new[] { handleContext.Message.GetType() });
+                    var method   = handlerType.GetMethod("HandleAsync", new[] { messageType });
                     var instance = ObjectProvider.GetService(handlerType);
                     try
                     {
@@ -77,9 +78,9 @@ namespace Misaka.MessageQueue
             return Task.CompletedTask;
         }
 
-        public abstract void Start();
+        public abstract void Start(ConsumerOption option);
 
-        public abstract Task StartAsync();
+        public abstract Task StartAsync(ConsumerOption option);
         public abstract void Stop();
     }
 }

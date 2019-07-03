@@ -8,8 +8,6 @@ namespace Misaka.MessageQueue
 
         public object Message { get; set; }
 
-        public Type MessageType { get; set; }
-
         public MessageHandleResult[] HandleResults { get; set; }
     }
 
