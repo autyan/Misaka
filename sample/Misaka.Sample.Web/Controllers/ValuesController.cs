@@ -30,7 +30,7 @@ namespace Misaka.Sample.Web.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            if (_cache.TryGetValue(id, out var value))
+            if (_cache.TryGetValue(id.ToString(), out var value))
             {
                 return value.ToString();
             }

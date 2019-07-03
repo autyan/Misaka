@@ -69,6 +69,13 @@ namespace Misaka.DependencyInject.Autofac
             return this;
         }
 
+        public IObjectProviderBuilder Register(Type type, ServiceLifetime serviceLifetime)
+        {
+            _containerBuilder.RegisterType(type)
+                             .InstancePerLifeTime(serviceLifetime);
+            return this;
+        }
+
         public IObjectProviderBuilder RegisterNamed<TService, TImplementation>(string name, ServiceLifetime serviceLifetime) 
             where TImplementation : TService
         {

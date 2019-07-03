@@ -15,7 +15,7 @@ namespace Misaka.Sample.Web.Application
 
         public Task HandleAsync(ValueEvent message)
         {
-            _cache.CreateEntry(message.Id).Value = message.Value;
+            _cache.Set(message.Id.ToString(), message.Value);
             return Task.CompletedTask;
         }
     }

@@ -17,6 +17,8 @@ namespace Misaka.DependencyInjection
 
         IObjectProviderBuilder Register<T>(ServiceLifetime serviceLifetime) where T : class;
 
+        IObjectProviderBuilder Register(Type type, ServiceLifetime serviceLifetime);
+
         IObjectProviderBuilder RegisterNamed<TService, TImplementation>(string name, ServiceLifetime serviceLifetime)
             where TImplementation : TService;
 

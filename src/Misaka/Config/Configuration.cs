@@ -3,9 +3,6 @@ using Microsoft.Extensions.Primitives;
 using Misaka.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
-using Misaka.Message;
-using Misaka.MessageQueue;
 
 namespace Misaka.Config
 {
@@ -47,14 +44,7 @@ namespace Misaka.Config
             ConfigurationCore = configuration ?? throw new ArgumentNullException(nameof(configuration));
             ObjectProviderFactory.Instance.RegisterInstance(typeof(Configuration), this);
 
-            UseMessageQueue();
             return this;
-        }
-
-        private void UseMessageQueue()
-        {
-            ObjectProviderFactory.Instance.ObjectProviderBuilder.Register<IMessageBus, MessageBus>(ServiceLifetime.Scoped);
-            ObjectProviderFactory.Instance.RegisterInstance(typeof(MessageHandlerProvider), new MessageHandlerProvider());
         }
     }
 }
