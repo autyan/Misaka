@@ -60,5 +60,41 @@ namespace Misaka.DependencyInject.Autofac
         {
             return builder.RegisterNamed<T>(name, ServiceLifetime.Scoped);
         }
+
+        public static IObjectProviderBuilder AddSingleton<TService, TImplementation>(this IObjectProviderBuilder builder)
+            where TImplementation : TService
+        {
+            return builder.Register<TService, TImplementation>(ServiceLifetime.Singleton);
+        }
+
+        public static IObjectProviderBuilder AddTransient<TService, TImplementation>(this IObjectProviderBuilder builder)
+            where TImplementation : TService
+        {
+            return builder.Register<TService, TImplementation>(ServiceLifetime.Transient);
+        }
+
+        public static IObjectProviderBuilder AddScoped<TService, TImplementation>(this IObjectProviderBuilder builder)
+            where TImplementation : TService
+        {
+            return builder.Register<TService, TImplementation>(ServiceLifetime.Scoped);
+        }
+
+        public static IObjectProviderBuilder AddNamedSingleton<TService, TImplementation>(this IObjectProviderBuilder builder, string name)
+            where TImplementation : TService
+        {
+            return builder.RegisterNamed<TService, TImplementation>(name, ServiceLifetime.Singleton);
+        }
+
+        public static IObjectProviderBuilder AddNamedTransient<TService, TImplementation>(this IObjectProviderBuilder builder, string name)
+            where TImplementation : TService
+        {
+            return builder.RegisterNamed<TService, TImplementation>(name, ServiceLifetime.Transient);
+        }
+
+        public static IObjectProviderBuilder AddNamedScoped<TService, TImplementation>(this IObjectProviderBuilder builder, string name)
+            where TImplementation : TService
+        {
+            return builder.RegisterNamed<TService, TImplementation>(name, ServiceLifetime.Scoped);
+        }
     }
 }

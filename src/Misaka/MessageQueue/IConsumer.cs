@@ -7,5 +7,7 @@ namespace Misaka.MessageQueue
         void Start();
 
         Task StartAsync();
+
+        void Stop();
     }
 }

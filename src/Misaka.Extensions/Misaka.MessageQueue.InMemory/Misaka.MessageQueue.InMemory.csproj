@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Misaka\Misaka.csproj" />
+    <ProjectReference Include="..\Misaka.DependencyInject.Autofac\Misaka.DependencyInject.Autofac.csproj" />
   </ItemGroup>
 
 </Project>

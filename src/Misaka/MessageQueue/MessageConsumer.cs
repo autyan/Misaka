@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Misaka.DependencyInjection;
 using Misaka.Message;
 
@@ -17,31 +18,61 @@ namespace Misaka.MessageQueue
             ObjectProvider = objectProvider;
         }
 
-        protected virtual async Task OnMessageReceive(MessageHandleContext handleContext)
+        protected virtual async Task HandleMessageAsync(Func<MessageHandleContext> contextFunc)
         {
-            await BeforeMessageProcess(handleContext);
+            var handleContext = contextFunc.Invoke();
 
+            await BeforeProcessAsync(handleContext)
+               .ConfigureAwait(false);
+
+            await ProcessAsync(handleContext)
+               .ConfigureAwait(false);
+
+            await AfterProcessedAsync(handleContext)
+               .ConfigureAwait(false);
+        }
+
+        protected virtual async Task ProcessAsync(MessageHandleContext handleContext)
+        {
             var handlerTypes = Provider.LookupHandlerTypes(handleContext.MessageType);
 
             using (ObjectProvider.CreateScope())
             {
+                handleContext.HandleResults = new MessageHandleResult[handlerTypes.Length];
+                var index = 0;
                 foreach (var handlerType in handlerTypes)
                 {
+                    var handleResult = new MessageHandleResult
+                                       {
+                                           MessageHandler = handlerType
+                                       };
                     var method   = handlerType.GetMethod("HandleAsync", new[] { handleContext.Message.GetType() });
                     var instance = ObjectProvider.GetService(handlerType);
-                    method?.Invoke(instance, new[] { handleContext.Message });
+                    try
+                    {
+                        var result = (Task) method?.Invoke(instance, new[] {handleContext.Message});
+                        if (result != null)
+                        {
+                            await result;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        handleResult.ProcessError = ex;
+                    }
+
+                    handleContext.HandleResults[index] = handleResult;
+                    index++;
                 }
             }
-
-            await AfterMessageProcessed(handleContext);
         }
 
-        protected virtual Task BeforeMessageProcess(MessageHandleContext handleContext)
+        protected virtual Task BeforeProcessAsync(MessageHandleContext handleContext)
         {
             return Task.CompletedTask;
         }
 
-        protected virtual Task AfterMessageProcessed(MessageHandleContext handleContext)
+        protected virtual Task AfterProcessedAsync(MessageHandleContext handleContext)
         {
             return Task.CompletedTask;
         }
@@ -49,5 +80,6 @@ namespace Misaka.MessageQueue
         public abstract void Start();
 
         public abstract Task StartAsync();
+        public abstract void Stop();
     }
 }

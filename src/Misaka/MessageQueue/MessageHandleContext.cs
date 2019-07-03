@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Misaka.MessageQueue
 {
@@ -10,8 +9,6 @@ namespace Misaka.MessageQueue
         public object Message { get; set; }
 
         public Type MessageType { get; set; }
-
-        public bool HasProcessed => HandleResults.All(r => !r.HasError);
 
         public MessageHandleResult[] HandleResults { get; set; }
     }

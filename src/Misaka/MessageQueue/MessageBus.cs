@@ -18,26 +18,32 @@ namespace Misaka.MessageQueue
 
         public void Publish(object message)
         {
-            foreach (var producer in _producers)
-            {
-                producer.Publish(new PublishContext
-                                 {
-                                     Topic   = RetrieveTopic(message),
-                                     Message = message
-                                 });
-            }
+           DoPublishAsync(message).GetAwaiter().GetResult();
         }
 
         public async Task PublishAsync(object message)
         {
+            await DoPublishAsync(message).ConfigureAwait(false);
+        }
+
+        private async Task DoPublishAsync(object message)
+        {
+            var context = new PublishContext
+                          {
+                              Topic   = RetrieveTopic(message),
+                              Message = message
+                          };
             foreach (var producer in _producers)
             {
-                await producer.PublishAsync(new PublishContext
-                                            {
-                                                Topic   = RetrieveTopic(message),
-                                                Message = message
-                                            })
-                              .ConfigureAwait(false);
+                try
+                {
+                    await producer.PublishAsync(context)
+                                  .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    context.PublishError = ex;
+                }
             }
         }
 
