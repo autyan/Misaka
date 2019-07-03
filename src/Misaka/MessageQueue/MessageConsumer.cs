@@ -43,27 +43,30 @@ namespace Misaka.MessageQueue
                 var index = 0;
                 foreach (var handlerType in handlerTypes)
                 {
-                    var handleResult = new MessageHandleResult
-                                       {
-                                           MessageHandler = handlerType
-                                       };
-                    var method   = handlerType.GetMethod("HandleAsync", new[] { messageType });
-                    var instance = ObjectProvider.GetService(handlerType);
-                    try
+                    using (ObjectProvider.CreateScope())
                     {
-                        var result = (Task) method?.Invoke(instance, new[] {handleContext.Message});
-                        if (result != null)
+                        var handleResult = new MessageHandleResult
+                                           {
+                                               MessageHandler = handlerType
+                                           };
+                        var method   = handlerType.GetMethod("HandleAsync", new[] { messageType });
+                        var instance = ObjectProvider.GetService(handlerType);
+                        try
                         {
-                            await result;
+                            var result = (Task)method?.Invoke(instance, new[] { handleContext.Message });
+                            if (result != null)
+                            {
+                                await result;
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        handleResult.ProcessError = ex;
-                    }
+                        catch (Exception ex)
+                        {
+                            handleResult.ProcessError = ex;
+                        }
 
-                    handleContext.HandleResults[index] = handleResult;
-                    index++;
+                        handleContext.HandleResults[index] = handleResult;
+                        index++;
+                    }
                 }
             }
         }
