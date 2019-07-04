@@ -18,8 +18,7 @@ namespace Misaka.MessageQueue
             var consumers = ObjectProviderFactory.Instance.ObjectProvider.GetService<IEnumerable<IConsumer>>();
             foreach (var consumer in consumers)
             {
-                await consumer.StartAsync()
-                              .ConfigureAwait(false);
+                await consumer.StartAsync();
             }
         }
 

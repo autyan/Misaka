@@ -7,16 +7,22 @@ namespace Misaka.Repository
 {
     public interface IRepository
     {
-        TAggregateRoot FindByKey<TAggregateRoot>(params object[] keyValues) where TAggregateRoot : IAggregateRoot;
+        TEntity FindByKey<TEntity>(params object[] keyValues) 
+            where TEntity : class, IEntity;
 
-        void Add<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IAggregateRoot;
+        void Add<TEntity>(TEntity entity) 
+            where TEntity : class, IEntity;
 
-        void Add<TAggregateRoot>(IEnumerable<TAggregateRoot> aggregateRoots) where TAggregateRoot : IAggregateRoot;
+        void Add<TEntity>(IEnumerable<TEntity> entities) 
+            where TEntity : class, IEntity;
 
-        void Remove<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : IAggregateRoot;
+        void Remove<TEntity>(TEntity entity) 
+            where TEntity : class, IEntity;
 
-        void Remove<TAggregateRoot>(IEnumerable<TAggregateRoot> aggregateRoots) where TAggregateRoot : IAggregateRoot;
+        void Remove<TEntity>(IEnumerable<TEntity> entities) 
+            where TEntity : class, IEntity;
 
-        IEnumerable<TAggregateRoot> Find<TAggregateRoot>(Expression<Func<TAggregateRoot, bool>> predicate) where TAggregateRoot : IAggregateRoot;
+        IEnumerable<TEntity> Find<TEntity>(Expression<Func<TEntity, bool>> predicate) 
+            where TEntity : class, IEntity;
     }
 }

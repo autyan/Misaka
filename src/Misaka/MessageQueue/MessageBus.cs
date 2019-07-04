@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Misaka.Message;
@@ -18,12 +19,28 @@ namespace Misaka.MessageQueue
 
         public void Publish(object message)
         {
-           DoPublishAsync(message).GetAwaiter().GetResult();
+           DoPublishAsync(message).Wait();
+        }
+
+        public void Publish(IEnumerable messages)
+        {
+            foreach (var message in messages)
+            {
+                DoPublishAsync(message).Wait();
+            }
         }
 
         public async Task PublishAsync(object message)
         {
-            await DoPublishAsync(message).ConfigureAwait(false);
+            await DoPublishAsync(message);
+        }
+
+        public async Task PublishAsync(IEnumerable messages)
+        {
+            foreach (var message in messages)
+            {
+                await DoPublishAsync(message);
+            }
         }
 
         private async Task DoPublishAsync(object message)
@@ -37,8 +54,7 @@ namespace Misaka.MessageQueue
             {
                 try
                 {
-                    await producer.PublishAsync(context)
-                                  .ConfigureAwait(false);
+                    await producer.PublishAsync(context);
                 }
                 catch (Exception ex)
                 {

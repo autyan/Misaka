@@ -31,14 +31,11 @@ namespace Misaka.MessageQueue
         {
             var handleContext = contextFunc.Invoke();
 
-            await BeforeProcessAsync(handleContext)
-               .ConfigureAwait(false);
+            await BeforeProcessAsync(handleContext);
 
-            await ProcessAsync(handleContext)
-               .ConfigureAwait(false);
+            await ProcessAsync(handleContext);
 
-            await AfterProcessedAsync(handleContext)
-               .ConfigureAwait(false);
+            await AfterProcessedAsync(handleContext);
         }
 
         protected virtual async Task ProcessAsync(MessageHandleContext handleContext)
