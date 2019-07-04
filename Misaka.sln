@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.Sample.Web", "sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.MessageQueue.InMemory", "src\Misaka.Extensions\Misaka.MessageQueue.InMemory\Misaka.MessageQueue.InMemory.csproj", "{D905B487-5ED5-4BEB-8BD8-0AA1B08FA9F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.EntityFrameworkCore", "src\Misaka.Extensions\Misaka.EntityFrameworkCore\Misaka.EntityFrameworkCore.csproj", "{45211E6F-B5B1-41B1-A21B-76099EBAAC38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{D905B487-5ED5-4BEB-8BD8-0AA1B08FA9F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D905B487-5ED5-4BEB-8BD8-0AA1B08FA9F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D905B487-5ED5-4BEB-8BD8-0AA1B08FA9F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45211E6F-B5B1-41B1-A21B-76099EBAAC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45211E6F-B5B1-41B1-A21B-76099EBAAC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45211E6F-B5B1-41B1-A21B-76099EBAAC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45211E6F-B5B1-41B1-A21B-76099EBAAC38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{1EA99FD7-6388-4043-A9FA-1E0AABA6EF2A} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 		{9D1D163D-1CD0-4A2C-BB9B-677077AA55BD} = {02FAEA41-A52F-4781-992B-8DCE5DA4D10C}
 		{D905B487-5ED5-4BEB-8BD8-0AA1B08FA9F7} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
+		{45211E6F-B5B1-41B1-A21B-76099EBAAC38} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC0FDE98-1713-4C86-B12F-7A585EE9E496}
