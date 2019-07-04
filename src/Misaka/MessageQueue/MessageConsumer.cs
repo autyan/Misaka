@@ -11,11 +11,20 @@ namespace Misaka.MessageQueue
 
         protected IObjectProvider ObjectProvider { get; }
 
+        protected string[] Topics { get; }
+
         protected MessageConsumer(MessageHandlerProvider provider,
-                                  IObjectProvider        objectProvider)
+                                  IObjectProvider        objectProvider,
+                                  ConsumerOption         option = null)
         {
             Provider       = provider;
             ObjectProvider = objectProvider;
+            if (option == null)
+            {
+                option = new ConsumerOption();
+            }
+
+            Topics = option.Topics ?? new string [0];
         }
 
         protected virtual async Task HandleMessageAsync(Func<MessageHandleContext> contextFunc)
@@ -81,9 +90,9 @@ namespace Misaka.MessageQueue
             return Task.CompletedTask;
         }
 
-        public abstract void Start(ConsumerOption option);
+        public abstract void Start();
 
-        public abstract Task StartAsync(ConsumerOption option);
+        public abstract Task StartAsync();
         public abstract void Stop();
     }
 }

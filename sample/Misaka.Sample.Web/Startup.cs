@@ -48,11 +48,18 @@ namespace Misaka.Sample.Web
 
             app.UseMvc();
 
+            SetupMessageQueue(applicationLifetime);
+        }
+
+        public void SetupMessageQueue(IApplicationLifetime applicationLifetime)
+        {
+            MessageQueueFactory.SetConsumerOption(new ConsumerOption
+                                                  {
+                                                      Topics = new [] { "Test" }
+                                                  });
+
             applicationLifetime.ApplicationStarted.Register(async () => {
-                                                                await MessageQueueFactory.Instance.StartAsync(new ConsumerOption
-                                                                                                              {
-                                                                                                                  Topics = "Test"
-                                                                                                              });
+                                                                await MessageQueueFactory.Instance.StartAsync();
                                                             });
         }
     }

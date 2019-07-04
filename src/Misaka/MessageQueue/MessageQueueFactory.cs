@@ -13,14 +13,19 @@ namespace Misaka.MessageQueue
 
         }
 
-        public async Task StartAsync(ConsumerOption option)
+        public async Task StartAsync()
         {
             var consumers = ObjectProviderFactory.Instance.ObjectProvider.GetService<IEnumerable<IConsumer>>();
             foreach (var consumer in consumers)
             {
-                await consumer.StartAsync(option)
+                await consumer.StartAsync()
                               .ConfigureAwait(false);
             }
+        }
+
+        public static void SetConsumerOption(ConsumerOption option)
+        {
+            ObjectProviderFactory.Instance.ObjectProviderBuilder.RegisterInstance(option);
         }
     }
 }

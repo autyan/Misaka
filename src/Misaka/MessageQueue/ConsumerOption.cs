@@ -2,6 +2,6 @@
 {
     public class ConsumerOption
     {
-        public string Topics { get; set; }
+        public string[] Topics { get; set; }
     }
 }

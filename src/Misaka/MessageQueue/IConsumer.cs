@@ -4,9 +4,9 @@ namespace Misaka.MessageQueue
 {
     public interface IConsumer
     {
-        void Start(ConsumerOption option);
+        void Start();
 
-        Task StartAsync(ConsumerOption option);
+        Task StartAsync();
 
         void Stop();
     }
