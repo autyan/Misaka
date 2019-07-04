@@ -31,11 +31,7 @@ namespace Misaka.MessageQueue
         {
             var handleContext = contextFunc.Invoke();
 
-            await BeforeProcessAsync(handleContext);
-
             await ProcessAsync(handleContext);
-
-            await AfterProcessedAsync(handleContext);
         }
 
         protected virtual async Task ProcessAsync(MessageHandleContext handleContext)
@@ -75,16 +71,6 @@ namespace Misaka.MessageQueue
                     }
                 }
             }
-        }
-
-        protected virtual Task BeforeProcessAsync(MessageHandleContext handleContext)
-        {
-            return Task.CompletedTask;
-        }
-
-        protected virtual Task AfterProcessedAsync(MessageHandleContext handleContext)
-        {
-            return Task.CompletedTask;
         }
 
         public abstract void Start();
