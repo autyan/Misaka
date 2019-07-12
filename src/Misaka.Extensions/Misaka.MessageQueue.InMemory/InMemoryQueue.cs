@@ -3,13 +3,14 @@ using Misaka.Message;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Misaka.MessageQueue.InMemory
 {
     public class InMemoryQueue : MessageConsumer, IProducer
     {
-        private static readonly ConcurrentQueue<InMemoryMessage> MessageQueue = new ConcurrentQueue<InMemoryMessage>();
+        private static readonly Channel<InMemoryMessage> MessageChannel = Channel.CreateUnbounded<InMemoryMessage>();
 
         public InMemoryQueue(MessageHandlerProvider provider,
                              IObjectProvider        objectProvider,
@@ -30,11 +31,11 @@ namespace Misaka.MessageQueue.InMemory
 
         private void DoPublish(PublishContext context)
         {
-            MessageQueue.Enqueue(new InMemoryMessage
-                                 {
-                                     Topic = context.Topic,
-                                     Message = context.Message
-                                 });
+            MessageChannel.Writer.WriteAsync(new InMemoryMessage
+                                             {
+                                                 Topic   = context.Topic,
+                                                 Message = context.Message
+                                             }).AsTask().Wait();
         }
 
         public override void Start()
@@ -52,27 +53,23 @@ namespace Misaka.MessageQueue.InMemory
         {
             Task.Factory.StartNew(async () =>
                                   {
-                                      while (true)
+                                      while (await MessageChannel.Reader.WaitToReadAsync())
                                       {
-                                          if (MessageQueue.TryDequeue(out var message))
-                                          {
-                                              if (!Topics.Contains(message.Topic)) continue;
+                                          if (!MessageChannel.Reader.TryRead(out var message)) continue;
+                                          if (!Topics.Contains(message.Topic)) continue;
 
-                                              await HandleMessageAsync(() => new MessageHandleContext
-                                              {
-                                                  Topic = message.Topic,
-                                                  Message = message.Message
-                                              });
-                                          }
-                                          Thread.Sleep(100);
+                                          await HandleMessageAsync(() => new MessageHandleContext
+                                                                         {
+                                                                             Topic   = message.Topic,
+                                                                             Message = message.Message
+                                                                         });
                                       }
-                                      // ReSharper disable once FunctionNeverReturns
                                   });
         }
 
         public override void Stop()
         {
-            
+            MessageChannel.Writer.Complete();
         }
     }
 }

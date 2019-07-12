@@ -9,4 +9,8 @@
     <ProjectReference Include="..\Misaka.DependencyInject.Autofac\Misaka.DependencyInject.Autofac.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Threading.Channels" Version="4.5.0" />
+  </ItemGroup>
+
 </Project>

@@ -21,10 +21,5 @@ namespace Misaka.MessageQueue
                 await consumer.StartAsync();
             }
         }
-
-        public static void SetConsumerOption(ConsumerOption option)
-        {
-            ObjectProviderFactory.Instance.ObjectProviderBuilder.RegisterInstance(option);
-        }
     }
 }

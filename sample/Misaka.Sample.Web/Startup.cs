@@ -21,10 +21,13 @@ namespace Misaka.Sample.Web
                   .UseAutofac()
                   .UseConfiguration(configuration)
                   .LoadComponent(nameof(Misaka))
-                  .UseInMemoryQueue();
+                  .UseInMemoryQueue(new ConsumerOption
+                                    {
+                                        Topics = new [] { "Test" }
+                                    });
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -48,16 +51,11 @@ namespace Misaka.Sample.Web
 
             app.UseMvc();
 
-            SetupMessageQueue(applicationLifetime);
+            StartMessageQueue(applicationLifetime);
         }
 
-        public void SetupMessageQueue(IApplicationLifetime applicationLifetime)
+        public void StartMessageQueue(IApplicationLifetime applicationLifetime)
         {
-            MessageQueueFactory.SetConsumerOption(new ConsumerOption
-                                                  {
-                                                      Topics = new [] { "Test" }
-                                                  });
-
             applicationLifetime.ApplicationStarted.Register(async () => {
                                                                 await MessageQueueFactory.Instance.StartAsync();
                                                             });
