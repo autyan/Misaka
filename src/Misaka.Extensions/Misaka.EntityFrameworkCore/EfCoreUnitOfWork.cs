@@ -28,7 +28,8 @@ namespace Misaka.EntityFrameworkCore
             _dbContexts.Add(dbContext);
         }
         
-        protected override async Task DoCommitAsync()
+        protected override async Task DoCommitAsync(TransactionScopeOption scopeOption,
+                                                    IsolationLevel         isolationLevel)
         {
             try
             {
@@ -54,8 +55,8 @@ namespace Misaka.EntityFrameworkCore
                 }
                 else
                 {
-                    using (var scope = new TransactionScope(TransactionScopeOption.Required,
-                                                            new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },
+                    using (var scope = new TransactionScope(scopeOption,
+                                                            new TransactionOptions { IsolationLevel = isolationLevel },
                                                             TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await CommitAction();

@@ -7,17 +7,20 @@ namespace Misaka.UnitOfWork
     {
         protected bool InTransaction => Transaction.Current != null;
         
-        public virtual void Commit()
+        public virtual void Commit(TransactionScopeOption scopeOption    = TransactionScopeOption.Required,
+                                   IsolationLevel         isolationLevel = IsolationLevel.ReadCommitted)
         {
-            DoCommitAsync().Wait();
+            DoCommitAsync(scopeOption, isolationLevel).Wait();
         }
 
-        public virtual async Task CommitAsync()
+        public virtual async Task CommitAsync(TransactionScopeOption scopeOption    = TransactionScopeOption.Required,
+                                              IsolationLevel         isolationLevel = IsolationLevel.ReadCommitted)
         {
-            await DoCommitAsync();
+            await DoCommitAsync(scopeOption, isolationLevel);
         }
 
-        protected abstract Task DoCommitAsync();
+        protected abstract Task DoCommitAsync(TransactionScopeOption scopeOption,
+                                              IsolationLevel         isolationLevel);
 
         protected virtual Task BeforeCommitAsync()
         {
