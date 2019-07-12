@@ -11,6 +11,23 @@ namespace Misaka.Config
 {
     public static class ConfigurationExtension
     {
+        public static Configuration MakeSureConfig<T>(this Configuration config, Action<T> optionSetup) where T : class
+        {
+            var services = new ServiceCollection() as IServiceCollection;
+            if (optionSetup == null)
+            {
+                var section = config.GetSection(nameof(ConsumerOption));
+                services.Configure<ConsumerOption>(section ?? config.ConfigurationCore);
+            }
+            else
+            {
+                services.Configure(optionSetup);
+            }
+            
+            ObjectProviderFactory.Instance.ObjectProviderBuilder.Populate(services);
+            return config;
+        }
+        
         public static Configuration LoadComponent(this Configuration config, Assembly[] assemblies)
         {
             TypeProvider.Instance.LoadFromAssemblies(assemblies);

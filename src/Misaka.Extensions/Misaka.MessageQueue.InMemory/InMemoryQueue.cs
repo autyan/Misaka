@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Misaka.MessageQueue.InMemory
 {
@@ -12,9 +13,9 @@ namespace Misaka.MessageQueue.InMemory
     {
         private static readonly Channel<InMemoryMessage> MessageChannel = Channel.CreateUnbounded<InMemoryMessage>();
 
-        public InMemoryQueue(MessageHandlerProvider provider,
-                             IObjectProvider        objectProvider,
-                             ConsumerOption         option) : base(provider, objectProvider, option)
+        public InMemoryQueue(MessageHandlerProvider          provider,
+                             IObjectProvider                 objectProvider,
+                             IOptionsMonitor<ConsumerOption> option) : base(provider, objectProvider, option)
         {
         }
 

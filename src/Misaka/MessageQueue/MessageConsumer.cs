@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Misaka.DependencyInjection;
 using Misaka.Message;
 
@@ -13,18 +14,17 @@ namespace Misaka.MessageQueue
 
         protected string[] Topics { get; }
 
-        protected MessageConsumer(MessageHandlerProvider provider,
-                                  IObjectProvider        objectProvider,
-                                  ConsumerOption         option = null)
+        protected ConsumerOption Option { get; }
+        
+        protected MessageConsumer(MessageHandlerProvider          provider,
+                                  IObjectProvider                 objectProvider,
+                                  IOptionsMonitor<ConsumerOption> option)
         {
             Provider       = provider;
             ObjectProvider = objectProvider;
-            if (option == null)
-            {
-                option = new ConsumerOption();
-            }
+            Option = option.CurrentValue;
 
-            Topics = option.Topics ?? new string [0];
+            Topics = Option.Topics ?? new string [0];
         }
 
         protected virtual async Task HandleMessageAsync(Func<MessageHandleContext> contextFunc)

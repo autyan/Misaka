@@ -38,7 +38,6 @@ namespace Misaka.Config
             set => Instance.ConfigurationCore[key] = value;
         }
 
-
         public Configuration UseConfiguration(IConfiguration configuration)
         {
             ConfigurationCore = configuration ?? throw new ArgumentNullException(nameof(configuration));

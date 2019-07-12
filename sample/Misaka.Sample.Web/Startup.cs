@@ -21,9 +21,9 @@ namespace Misaka.Sample.Web
                   .UseAutofac()
                   .UseConfiguration(configuration)
                   .LoadComponent(nameof(Misaka))
-                  .UseInMemoryQueue(new ConsumerOption
+                  .UseInMemoryQueue(option =>
                                     {
-                                        Topics = new [] { "Test" }
+                                        option.Topics = new[] {"Test"};
                                     });
         }
 
