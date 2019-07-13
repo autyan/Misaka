@@ -1,19 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Misaka.MessageQueue;
 using Misaka.MessageStore;
-using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace Misaka.EntityFrameworkCore
 {
     public class EfMessageStore : DbContext, IMessageStore
     {
-        private readonly ILogger _logger;
-
-        public EfMessageStore(ILoggerFactory loggerFactory)
+        public EfMessageStore(DbContextOptions options) : base(options)
         {
-            _logger = loggerFactory.CreateLogger<EfMessageStore>();
         }
 
         public DbSet<MessagePublished> MessagePublished { get; set; }
@@ -41,14 +36,7 @@ namespace Misaka.EntityFrameworkCore
                                                       context.Message.ToString(),
                                                       context.PublishTime, 
                                                       context.PublishError?.ToString()));
-            try
-            {
-                await SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Save published message failed");
-            }
+            await SaveChangesAsync();
         }
 
         public async Task SaveConsumeAsync(MessageHandleContext context)
@@ -64,14 +52,7 @@ namespace Misaka.EntityFrameworkCore
                                                      consumedMessage.Id));
             }
 
-            try
-            {
-                await SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Save consumed message failed");
-            }
+            await SaveChangesAsync();
         }
     }
 }

@@ -8,11 +8,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.16" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.DependencyInject.Autofac\Misaka.DependencyInject.Autofac.csproj" />
+    <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.EntityFrameworkCore\Misaka.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.MessageQueue.InMemory\Misaka.MessageQueue.InMemory.csproj" />
     <ProjectReference Include="..\..\src\Misaka\Misaka.csproj" />
   </ItemGroup>

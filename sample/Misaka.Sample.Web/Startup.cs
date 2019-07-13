@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Misaka.Config;
 using Misaka.DependencyInject.Autofac;
 using Misaka.DependencyInjection;
+using Misaka.EntityFrameworkCore;
 using Misaka.MessageQueue;
 using Misaka.MessageQueue.InMemory;
+using Misaka.Sample.Web.Application;
 
 namespace Misaka.Sample.Web
 {
@@ -21,6 +24,12 @@ namespace Misaka.Sample.Web
                   .UseAutofac()
                   .UseConfiguration(configuration)
                   .LoadComponent(nameof(Misaka))
+                  .UseEfCore()
+                  .UseEfCoreMessageStore<SampleDbContext>()
+                  .UserDbContextPool<SampleDbContext>(option =>
+                                                     {
+                                                         option.UseMySQL("server=47.101.138.31;database=misaka_framework;user=autyan;password=demo87#yq");
+                                                     })
                   .UseInMemoryQueue(option =>
                                     {
                                         option.Topics = new[] {"Test"};
