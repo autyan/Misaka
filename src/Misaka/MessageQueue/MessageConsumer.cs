@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Misaka.DependencyInjection;
 using Misaka.Message;
+using Misaka.MessageStore;
 
 namespace Misaka.MessageQueue
 {
@@ -15,7 +16,18 @@ namespace Misaka.MessageQueue
         protected string[] Topics { get; }
 
         protected ConsumerOption Option { get; }
-        
+
+        protected IMessageStore MessageStore { get; }
+
+        protected MessageConsumer(MessageHandlerProvider          provider,
+                                  IObjectProvider                 objectProvider,
+                                  IOptionsMonitor<ConsumerOption> option,
+                                  IMessageStore                   messageStore)
+        :this(provider, objectProvider, option)
+        {
+            MessageStore = messageStore;
+        }
+
         protected MessageConsumer(MessageHandlerProvider          provider,
                                   IObjectProvider                 objectProvider,
                                   IOptionsMonitor<ConsumerOption> option)
@@ -71,11 +83,22 @@ namespace Misaka.MessageQueue
                     }
                 }
             }
+
+            await PostProcessAsync(handleContext);
+        }
+
+        protected virtual async Task PostProcessAsync(MessageHandleContext context)
+        {
+            if (MessageStore != null)
+            {
+                await MessageStore.SaveConsumeAsync(context);
+            }
         }
 
         public abstract void Start();
 
         public abstract Task StartAsync();
+
         public abstract void Stop();
     }
 }

@@ -2,11 +2,20 @@
 
 namespace Misaka.MessageQueue
 {
-    public class PublishContext
+    public sealed class PublishContext
     {
+        public PublishContext()
+        {
+            PublishTime = DateTime.Now;
+        }
+
         public string Topic { get; set; }
 
         public object Message { get; set; }
+
+        public DateTime PublishTime { get; }
+
+        public string Producer { get; set; }
 
         public Exception PublishError { get; set; }
     }

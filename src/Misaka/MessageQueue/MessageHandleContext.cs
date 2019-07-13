@@ -4,9 +4,16 @@ namespace Misaka.MessageQueue
 {
     public class MessageHandleContext
     {
+        public MessageHandleContext()
+        {
+            ConsumeTime = DateTime.Now;
+        }
+
         public string Topic { get; set; }
 
         public object Message { get; set; }
+
+        public DateTime ConsumeTime { get; }
 
         public MessageHandleResult[] HandleResults { get; set; }
     }

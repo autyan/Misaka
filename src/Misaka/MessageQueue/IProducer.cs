@@ -7,5 +7,7 @@ namespace Misaka.MessageQueue
         void Publish(PublishContext context);
 
         Task PublishAsync(PublishContext context);
+
+        string Name { get; }
     }
 }

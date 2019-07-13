@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Misaka.Message;
+using Misaka.MessageStore;
 
 namespace Misaka.MessageQueue
 {
@@ -11,6 +12,15 @@ namespace Misaka.MessageQueue
         private readonly IEnumerable<IProducer> _producers;
 
         private readonly Dictionary<Type, string> _messageTopics = new Dictionary<Type, string>();
+
+        private readonly IMessageStore _messageStore;
+
+        public MessageBus(IEnumerable<IProducer> produces,
+                          IMessageStore          messageStore)
+            : this(produces)
+        {
+            _messageStore = messageStore;
+        }
 
         public MessageBus(IEnumerable<IProducer> producers)
         {
@@ -45,13 +55,15 @@ namespace Misaka.MessageQueue
 
         private async Task DoPublishAsync(object message)
         {
-            var context = new PublishContext
-                          {
-                              Topic   = RetrieveTopic(message),
-                              Message = message
-                          };
+            var topic = RetrieveTopic(message);
             foreach (var producer in _producers)
             {
+                var context = new PublishContext
+                              {
+                                  Topic    = topic,
+                                  Message  = message,
+                                  Producer = producer.Name
+                              };
                 try
                 {
                     await producer.PublishAsync(context);
@@ -59,6 +71,11 @@ namespace Misaka.MessageQueue
                 catch (Exception ex)
                 {
                     context.PublishError = ex;
+                }
+
+                if (_messageStore != null)
+                {
+                    await _messageStore.SavePublishAsync(context);
                 }
             }
         }

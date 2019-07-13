@@ -1,11 +1,11 @@
-﻿using Misaka.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.Options;
+using Misaka.DependencyInjection;
 using Misaka.Message;
-using System.Collections.Concurrent;
 using System.Linq;
-using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
+using Misaka.MessageStore;
 
 namespace Misaka.MessageQueue.InMemory
 {
@@ -15,7 +15,16 @@ namespace Misaka.MessageQueue.InMemory
 
         public InMemoryQueue(MessageHandlerProvider          provider,
                              IObjectProvider                 objectProvider,
-                             IOptionsMonitor<ConsumerOption> option) : base(provider, objectProvider, option)
+                             IOptionsMonitor<ConsumerOption> option,
+                             IMessageStore                   messageStore) 
+            : base(provider, objectProvider, option, messageStore)
+        {
+        }
+
+        public InMemoryQueue(MessageHandlerProvider          provider,
+                             IObjectProvider                 objectProvider,
+                             IOptionsMonitor<ConsumerOption> option) 
+            : base(provider, objectProvider, option)
         {
         }
 
@@ -29,6 +38,8 @@ namespace Misaka.MessageQueue.InMemory
             DoPublish(context);
             return Task.CompletedTask;
         }
+
+        public string Name => nameof(InMemoryQueue);
 
         private void DoPublish(PublishContext context)
         {
@@ -57,13 +68,14 @@ namespace Misaka.MessageQueue.InMemory
                                       while (await MessageChannel.Reader.WaitToReadAsync())
                                       {
                                           if (!MessageChannel.Reader.TryRead(out var message)) continue;
+                                          var context = new MessageHandleContext
+                                                        {
+                                                            Topic       = message.Topic,
+                                                            Message     = message.Message
+                                                        };
                                           if (!Topics.Contains(message.Topic)) continue;
 
-                                          await HandleMessageAsync(() => new MessageHandleContext
-                                                                         {
-                                                                             Topic   = message.Topic,
-                                                                             Message = message.Message
-                                                                         });
+                                          await HandleMessageAsync(() => context);
                                       }
                                   });
         }
