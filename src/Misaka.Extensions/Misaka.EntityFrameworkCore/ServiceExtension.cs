@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Misaka.MessageStore;
@@ -10,22 +11,23 @@ namespace Misaka.EntityFrameworkCore
     {
         public static IServiceCollection UseEfCore(this IServiceCollection services)
         {
-            RegisterEfCoreComponents(services);
+            services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
+            services.AddScoped<IRepository, EfCoreRepository>();
 
             return services;
         }
 
-        public static IServiceCollection UseEfCoreWithMessageStore<TMessageStore>(this IServiceCollection services) where TMessageStore : DbContext, IMessageStore
+        public static IServiceCollection UseEfCoreMessageStore<TMessageStore>(this IServiceCollection services) where TMessageStore : DbContext, IMessageStore
         {
-            RegisterEfCoreComponents(services);
             services.AddScoped<IMessageStore, TMessageStore>();
             return services;
         }
 
-        private static void RegisterEfCoreComponents(IServiceCollection services)
+        public static IServiceCollection UserDbContextPool<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> builder) where TDbContext : DbContext
         {
-            services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
-            services.AddScoped<IRepository, EfCoreRepository>();
+            services.AddDbContextPool<TDbContext>(builder);
+
+            return services;
         }
     }
 }
