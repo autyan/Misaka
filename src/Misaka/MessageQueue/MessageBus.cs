@@ -9,6 +9,7 @@ namespace Misaka.MessageQueue
 {
     public class MessageBus : IMessageBus
     {
+
         private readonly IEnumerable<IProducer> _producers;
 
         private readonly Dictionary<Type, string> _messageTopics = new Dictionary<Type, string>();
@@ -107,6 +108,11 @@ namespace Misaka.MessageQueue
             }
 
             _messageTopics[messageType] = string.Empty;
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

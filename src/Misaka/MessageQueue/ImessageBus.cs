@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 
 namespace Misaka.MessageQueue
 {
-    public interface IMessageBus
+    public interface IMessageBus : IDisposable
     {
         void Publish(object message);
 

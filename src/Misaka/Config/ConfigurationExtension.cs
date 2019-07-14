@@ -46,7 +46,7 @@ namespace Misaka.Config
 
         private static void UseMessageQueue()
         {
-            ObjectProviderFactory.Instance.ObjectProviderBuilder.Register<IMessageBus, MessageBus>(ServiceLifetime.Scoped);
+            ObjectProviderFactory.Instance.ObjectProviderBuilder.Register<IMessageBus, MessageBus>(ServiceLifetime.Singleton);
             ObjectProviderFactory.Instance.RegisterInstance(typeof(MessageHandlerProvider), new MessageHandlerProvider());
 
             var handlers = TypeProvider.Instance.FindTypeInfos(info =>

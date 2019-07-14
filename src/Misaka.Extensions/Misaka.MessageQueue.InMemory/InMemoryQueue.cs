@@ -1,11 +1,11 @@
-﻿using System;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Misaka.DependencyInjection;
 using Misaka.Message;
+using Misaka.MessageStore;
+using System;
 using System.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Misaka.MessageStore;
 
 namespace Misaka.MessageQueue.InMemory
 {

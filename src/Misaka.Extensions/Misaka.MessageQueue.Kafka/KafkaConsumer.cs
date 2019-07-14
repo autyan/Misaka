@@ -9,16 +9,16 @@ namespace Misaka.MessageQueue.Kafka
 {
     public class KafkaConsumer : MessageConsumer
     {
-        public KafkaConsumer(MessageHandlerProvider          provider,
-                             IObjectProvider                 objectProvider,
+        public KafkaConsumer(MessageHandlerProvider       provider,
+                             IObjectProvider              objectProvider,
                              IOptionsMonitor<KafkaOption> option,
-                             IMessageStore                   messageStore)
+                             IMessageStore                messageStore)
             : base(provider, objectProvider, option, messageStore)
         {
         }
 
-        public KafkaConsumer(MessageHandlerProvider          provider,
-                             IObjectProvider                 objectProvider,
+        public KafkaConsumer(MessageHandlerProvider       provider,
+                             IObjectProvider              objectProvider,
                              IOptionsMonitor<KafkaOption> option)
             : base(provider, objectProvider, option)
         {
