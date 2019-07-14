@@ -103,7 +103,7 @@ namespace Misaka.Extensions.Json
                        : JsonConvert.SerializeObject(obj, settings);
         }
 
-        internal static string ToJson(this object obj,
+        public static string ToJson(this object obj,
                                     bool serializeNonPublic = false,
                                     bool loopSerialize = false,
                                     bool useCamelCase = false,
@@ -114,7 +114,7 @@ namespace Misaka.Extensions.Json
                                                GetCustomJsonSerializerSettings(serializeNonPublic, loopSerialize, useCamelCase, useStringEnumConvert, ignoreNullValue: ignoreNullValue));
         }
 
-        internal static object ToObject(this string json,
+        public static object ToObject(this string json,
                                           bool serializeNonPublic = false,
                                           bool loopSerialize = false,
                                           bool useCamelCase = false)
@@ -129,7 +129,7 @@ namespace Misaka.Extensions.Json
 
         }
 
-        internal static object ToObject(this string json,
+        public static object ToObject(this string json,
                                           Type jsonType,
                                           bool serializeNonPublic = false,
                                           bool loopSerialize = false,
@@ -155,7 +155,7 @@ namespace Misaka.Extensions.Json
 
         }
 
-        internal static T ToObject<T>(this string json,
+        public static T ToObject<T>(this string json,
                                         bool serializeNonPublic = false,
                                         bool loopSerialize = false,
                                         bool useCamelCase = false)
@@ -183,7 +183,7 @@ namespace Misaka.Extensions.Json
 
         }
 
-        internal static dynamic ToDynamicObject(this string json,
+        public static dynamic ToDynamicObject(this string json,
                                               bool serializeNonPublic = false,
                                               bool loopSerialize = false,
                                               bool useCamelCase = false)
@@ -191,7 +191,7 @@ namespace Misaka.Extensions.Json
             return json.ToObject<JObject>(serializeNonPublic, loopSerialize, useCamelCase);
         }
 
-        internal static IEnumerable<dynamic> ToDynamicObjects(this string json,
+        public static IEnumerable<dynamic> ToDynamicObjects(this string json,
                                                             bool serializeNonPublic = false,
                                                             bool loopSerialize = false,
                                                             bool useCamelCase = false)
