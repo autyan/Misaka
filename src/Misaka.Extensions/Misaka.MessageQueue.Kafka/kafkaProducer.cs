@@ -1,5 +1,6 @@
 ﻿using Confluent.Kafka;
 using Microsoft.Extensions.Options;
+using Misaka.Extensions.Json;
 using System.Threading.Tasks;
 
 namespace Misaka.MessageQueue.Kafka
@@ -34,7 +35,7 @@ namespace Misaka.MessageQueue.Kafka
             await _kafkaProducer.ProduceAsync(context.Topic, new Message<string, string>
                                                              {
                                                                  Key = context.Key,
-                                                                 Value = context.Message.ToString()
+                                                                 Value = context.Message.ToJson()
                                                              });
         }
 
@@ -42,6 +43,7 @@ namespace Misaka.MessageQueue.Kafka
 
         public void Dispose()
         {
+            _kafkaProducer.Dispose();
         }
     }
 }

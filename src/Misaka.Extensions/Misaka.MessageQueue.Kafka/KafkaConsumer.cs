@@ -11,7 +11,7 @@ namespace Misaka.MessageQueue.Kafka
     {
         public KafkaConsumer(MessageHandlerProvider          provider,
                              IObjectProvider                 objectProvider,
-                             IOptionsMonitor<ConsumerOption> option,
+                             IOptionsMonitor<KafkaOption> option,
                              IMessageStore                   messageStore)
             : base(provider, objectProvider, option, messageStore)
         {
@@ -19,7 +19,7 @@ namespace Misaka.MessageQueue.Kafka
 
         public KafkaConsumer(MessageHandlerProvider          provider,
                              IObjectProvider                 objectProvider,
-                             IOptionsMonitor<ConsumerOption> option)
+                             IOptionsMonitor<KafkaOption> option)
             : base(provider, objectProvider, option)
         {
         }

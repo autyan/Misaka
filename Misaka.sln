@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.MessageQueue.InMemor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.EntityFrameworkCore", "src\Misaka.Extensions\Misaka.EntityFrameworkCore\Misaka.EntityFrameworkCore.csproj", "{45211E6F-B5B1-41B1-A21B-76099EBAAC38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.MessageQueue.Kafka", "src\Misaka.Extensions\Misaka.MessageQueue.Kafka\Misaka.MessageQueue.Kafka.csproj", "{B2422992-3ADB-401C-BF11-98C3855D1172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.MessageQueue.Kafka", "src\Misaka.Extensions\Misaka.MessageQueue.Kafka\Misaka.MessageQueue.Kafka.csproj", "{B2422992-3ADB-401C-BF11-98C3855D1172}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.Extensions.JsonSerializer", "Misaka.Extensions.JsonSerializer\Misaka.Extensions.JsonSerializer.csproj", "{751F5F63-6E31-450A-88CF-82133EDA710B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.Extensions.Json", "src\Misaka.Extensions\Misaka.Extensions.Json\Misaka.Extensions.Json.csproj", "{A8EE1508-324D-4D7C-A48A-B10CF9096F79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,10 @@ Global
 		{B2422992-3ADB-401C-BF11-98C3855D1172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2422992-3ADB-401C-BF11-98C3855D1172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2422992-3ADB-401C-BF11-98C3855D1172}.Release|Any CPU.Build.0 = Release|Any CPU
-		{751F5F63-6E31-450A-88CF-82133EDA710B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{751F5F63-6E31-450A-88CF-82133EDA710B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{751F5F63-6E31-450A-88CF-82133EDA710B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{751F5F63-6E31-450A-88CF-82133EDA710B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8EE1508-324D-4D7C-A48A-B10CF9096F79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8EE1508-324D-4D7C-A48A-B10CF9096F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8EE1508-324D-4D7C-A48A-B10CF9096F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8EE1508-324D-4D7C-A48A-B10CF9096F79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,7 +65,7 @@ Global
 		{D905B487-5ED5-4BEB-8BD8-0AA1B08FA9F7} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 		{45211E6F-B5B1-41B1-A21B-76099EBAAC38} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 		{B2422992-3ADB-401C-BF11-98C3855D1172} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
-		{751F5F63-6E31-450A-88CF-82133EDA710B} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
+		{A8EE1508-324D-4D7C-A48A-B10CF9096F79} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC0FDE98-1713-4C86-B12F-7A585EE9E496}
