@@ -18,5 +18,7 @@ namespace Misaka.MessageQueue
         public string Producer { get; set; }
 
         public Exception PublishError { get; set; }
+
+        public string Key { get; set; }
     }
 }

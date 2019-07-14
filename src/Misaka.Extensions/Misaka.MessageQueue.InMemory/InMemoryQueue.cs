@@ -84,5 +84,9 @@ namespace Misaka.MessageQueue.InMemory
         {
             MessageChannel.Writer.Complete();
         }
+
+        public void Dispose()
+        {
+        }
     }
 }
