@@ -10,22 +10,22 @@ namespace Misaka.MessageQueue
     public class MessageBus : IMessageBus
     {
 
-        private readonly IEnumerable<IProducer> _producers;
+        private readonly IProducer _producer;
 
         private readonly Dictionary<Type, string> _messageTopics = new Dictionary<Type, string>();
 
         private readonly IMessageStore _messageStore;
 
-        public MessageBus(IEnumerable<IProducer> produces,
-                          IMessageStore          messageStore)
-            : this(produces)
+        public MessageBus(IProducer     produce,
+                          IMessageStore messageStore)
+            : this(produce)
         {
             _messageStore = messageStore;
         }
 
-        public MessageBus(IEnumerable<IProducer> producers)
+        public MessageBus(IProducer producer)
         {
-            _producers = producers;
+            _producer = producer;
         }
 
         public void Publish(object message)
@@ -57,22 +57,19 @@ namespace Misaka.MessageQueue
         private async Task DoPublishAsync(object message)
         {
             var topic = RetrieveTopic(message);
-            foreach (var producer in _producers)
+            var context = new PublishContext(topic, message, _producer.Name);
+            try
             {
-                var context = new PublishContext(topic, message, producer.Name);
-                try
-                {
-                    await producer.PublishAsync(context);
-                }
-                catch (Exception ex)
-                {
-                    context.SetError(ex);
-                }
+                await _producer.PublishAsync(context);
+            }
+            catch (Exception ex)
+            {
+                context.SetError(ex);
+            }
 
-                if (_messageStore != null)
-                {
-                    await _messageStore.SavePublishAsync(context);
-                }
+            if (_messageStore != null)
+            {
+                await _messageStore.SavePublishAsync(context);
             }
         }
 

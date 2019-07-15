@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Misaka.DependencyInjection;
 using System.Threading.Tasks;
-using Misaka.DependencyInjection;
 
 namespace Misaka.MessageQueue
 {
@@ -15,11 +14,8 @@ namespace Misaka.MessageQueue
 
         public async Task StartAsync()
         {
-            var consumers = ObjectProviderFactory.Instance.ObjectProvider.GetService<IEnumerable<IConsumer>>();
-            foreach (var consumer in consumers)
-            {
-                await consumer.StartAsync();
-            }
+            var consumer = ObjectProviderFactory.Instance.ObjectProvider.GetService<IConsumer>();
+            await consumer.StartAsync();
         }
     }
 }
