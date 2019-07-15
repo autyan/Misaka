@@ -1,11 +1,29 @@
-﻿namespace Misaka.MessageQueue.Kafka
+﻿using Misaka.Extensions.Json;
+
+namespace Misaka.MessageQueue.Kafka
 {
     internal class KafkaMessage
     {
-        public string MessageType { get; set; }
+        public KafkaMessage(object message, 
+                            string messageKey, 
+                            string host,
+                            string app)
+        {
+            MessageType = message.GetType().FullName;
+            MessageBody = message.ToJson();
+            MessageKey  = messageKey;
+            Host        = host;
+            App         = app;
+        }
 
-        public string MessageBody { get; set; }
+        public string MessageType { get; }
 
-        public string MessageKey { get; set; }
+        public string MessageBody { get; }
+
+        public string MessageKey { get; }
+
+        public string Host { get; }
+
+        public string App { get; set; }
     }
 }

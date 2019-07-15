@@ -68,11 +68,7 @@ namespace Misaka.MessageQueue.InMemory
                                       while (await MessageChannel.Reader.WaitToReadAsync())
                                       {
                                           if (!MessageChannel.Reader.TryRead(out var message)) continue;
-                                          var context = new MessageHandleContext
-                                                        {
-                                                            Topic       = message.Topic,
-                                                            Message     = message.Message
-                                                        };
+                                          var context = new MessageHandleContext(message.Topic, message.Message);
                                           if (!Topics.Contains(message.Topic)) continue;
 
                                           await HandleMessageAsync(() => context);

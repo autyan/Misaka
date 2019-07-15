@@ -59,19 +59,14 @@ namespace Misaka.MessageQueue
             var topic = RetrieveTopic(message);
             foreach (var producer in _producers)
             {
-                var context = new PublishContext
-                              {
-                                  Topic    = topic,
-                                  Message  = message,
-                                  Producer = producer.Name
-                              };
+                var context = new PublishContext(topic, message, producer.Name);
                 try
                 {
                     await producer.PublishAsync(context);
                 }
                 catch (Exception ex)
                 {
-                    context.PublishError = ex;
+                    context.SetError(ex);
                 }
 
                 if (_messageStore != null)

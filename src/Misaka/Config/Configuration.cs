@@ -42,7 +42,6 @@ namespace Misaka.Config
         {
             ConfigurationCore = configuration ?? throw new ArgumentNullException(nameof(configuration));
             ObjectProviderFactory.Instance.RegisterInstance(typeof(Configuration), this);
-
             return this;
         }
     }

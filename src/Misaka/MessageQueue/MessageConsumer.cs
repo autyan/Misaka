@@ -53,16 +53,13 @@ namespace Misaka.MessageQueue
 
             using (ObjectProvider.CreateScope())
             {
-                handleContext.HandleResults = new MessageHandleResult[handlerTypes.Length];
+                var results = new MessageHandleResult[handlerTypes.Length];
                 var index = 0;
                 foreach (var handlerType in handlerTypes)
                 {
                     using (ObjectProvider.CreateScope())
                     {
-                        var handleResult = new MessageHandleResult
-                                           {
-                                               MessageHandler = handlerType
-                                           };
+                        Exception error = null;
                         var method   = handlerType.GetMethod("HandleAsync", new[] { messageType });
                         var instance = ObjectProvider.GetService(handlerType);
                         try
@@ -75,13 +72,16 @@ namespace Misaka.MessageQueue
                         }
                         catch (Exception ex)
                         {
-                            handleResult.ProcessError = ex;
+                            error = ex;
                         }
 
-                        handleContext.HandleResults[index] = handleResult;
+                        var handleResult = new MessageHandleResult(handlerType, error);
+                        results[index] = handleResult;
                         index++;
                     }
                 }
+
+                handleContext.SetHandleResult(results);
             }
 
             await PostProcessAsync(handleContext);

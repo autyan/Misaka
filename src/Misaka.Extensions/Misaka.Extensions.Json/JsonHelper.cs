@@ -103,7 +103,7 @@ namespace Misaka.Extensions.Json
                        : JsonConvert.SerializeObject(obj, settings);
         }
 
-        public static string ToJson(this object obj,
+        internal static string ToJson(this object obj,
                                     bool serializeNonPublic = false,
                                     bool loopSerialize = false,
                                     bool useCamelCase = false,

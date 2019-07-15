@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Misaka.Extensions.Json;
 using System.Threading.Tasks;
+using Misaka.Utility;
 
 namespace Misaka.MessageQueue.Kafka
 {
@@ -9,7 +10,17 @@ namespace Misaka.MessageQueue.Kafka
     {
         private readonly IProducer<string, string> _kafkaProducer;
 
-        public KafkaProducer(IOptionsMonitor<KafkaOption> option)
+        private readonly string _host;
+
+        private readonly string _app;
+
+        private KafkaProducer()
+        {
+            _host = ApplicationUtility.GetHostIpAddress();
+            _app  = ApplicationUtility.GetCurrentApplicationName();
+        }
+
+        public KafkaProducer(IOptionsMonitor<KafkaOption> option) : this()
         {
             var option1 = option.CurrentValue;
             _kafkaProducer = new ProducerBuilder<string, string>(new ProducerConfig
@@ -35,7 +46,10 @@ namespace Misaka.MessageQueue.Kafka
             await _kafkaProducer.ProduceAsync(context.Topic, new Message<string, string>
                                                              {
                                                                  Key = context.Key,
-                                                                 Value = context.Message.ToJson()
+                                                                 Value = new KafkaMessage(context.Message, 
+                                                                                          context.Key,
+                                                                                          _host,
+                                                                                          _app).ToJson()
                                                              });
         }
 
