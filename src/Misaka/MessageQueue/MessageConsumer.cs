@@ -48,6 +48,12 @@ namespace Misaka.MessageQueue
 
         protected virtual async Task ProcessAsync(MessageHandleContext handleContext)
         {
+            if (handleContext.Message is string)
+            {
+                await PostProcessAsync(handleContext);
+                return;
+            }
+
             var messageType = handleContext.Message.GetType();
             var handlerTypes = Provider.LookupHandlerTypes(messageType);
 
