@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Misaka.Config;
@@ -16,6 +17,7 @@ namespace Misaka.EntityFrameworkCore
             var services = new ServiceCollection();
             services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
             services.AddScoped<IRepository, EfCoreRepository>();
+            services.AddScoped<IEventBus, EventBus>();
             ObjectProviderFactory.Instance.ObjectProviderBuilder.Populate(services);
             return config;
         }

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Misaka.Domain;
-using Misaka.MessageQueue;
 using Misaka.UnitOfWork;
 using IsolationLevel = System.Transactions.IsolationLevel;
 
@@ -15,11 +14,11 @@ namespace Misaka.EntityFrameworkCore
     {
         private readonly List<DbContext> _dbContexts = new List<DbContext>();
 
-        private readonly IMessageBus _messageBus;
+        private readonly IEventBus _eventBus;
 
-        public EfCoreUnitOfWork(IMessageBus messageBus)
+        public EfCoreUnitOfWork(IEventBus eventBus)
         {
-            _messageBus = messageBus;
+            _eventBus = eventBus;
         }
 
         internal void RegisterDbContext(DbContext dbContext)
@@ -42,7 +41,7 @@ namespace Misaka.EntityFrameworkCore
                                             {
                                                 if (!(entityEntry is IAggregateRoot aggregateRoot)) continue;
                                                 
-                                                await _messageBus.PublishAsync(aggregateRoot.GetEvents());
+                                                _eventBus.PrepareEvents(aggregateRoot.GetEvents());
                                                 aggregateRoot.ClearEvents();
                                             }
                                         });
@@ -79,6 +78,12 @@ namespace Misaka.EntityFrameworkCore
             {
                 await AfterCommitAsync();
             }
+        }
+
+        protected override async Task BeforeCommitAsync()
+        {
+            await _eventBus.PublishEventsAsync();
+            await base.BeforeCommitAsync();
         }
 
         public override void Dispose()

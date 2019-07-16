@@ -1,6 +1,8 @@
-﻿namespace Misaka.Domain
+﻿using Misaka.UnitOfWork;
+
+namespace Misaka.Domain
 {
-    public interface IAggregateRootEvent
+    public interface IAggregateRootEvent : IEvent
     {
         string Key { get; }
     }
