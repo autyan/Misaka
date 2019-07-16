@@ -19,7 +19,14 @@ namespace Misaka.MessageQueue.Kafka
                 return RegisteredMessageType[source];
             }
 
-            return Type.GetType(source);
+            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var type = a.GetType(source);
+                if (type != null)
+                    return type;
+            }
+
+            return null;
         }
     }
 }

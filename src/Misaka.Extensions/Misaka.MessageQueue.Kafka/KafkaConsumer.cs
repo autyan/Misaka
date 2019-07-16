@@ -80,7 +80,7 @@ namespace Misaka.MessageQueue.Kafka
                                     try
                                     {
                                         var cr = c.Consume(cts.Token);
-                                        var @event = cr.Value.ToObject<KafkaMessage>();
+                                        var @event = cr.Value.ToObject<KafkaMessage>(true);
                                         var messageType =
                                             MessageTypeMatcher.Lookup(@event.MessageType);
 
@@ -92,7 +92,7 @@ namespace Misaka.MessageQueue.Kafka
                                         }
                                         else
                                         {
-                                            messageObj = @event.MessageType.ToObject(messageType);
+                                            messageObj = @event.MessageBody.ToObject(messageType);
                                         }
 
                                         await HandleMessageAsync(() => new MessageHandleContext(cr.Topic, messageObj));

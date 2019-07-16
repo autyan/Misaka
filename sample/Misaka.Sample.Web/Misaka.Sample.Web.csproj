@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.DependencyInject.Autofac\Misaka.DependencyInject.Autofac.csproj" />
     <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.EntityFrameworkCore\Misaka.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.MessageQueue.InMemory\Misaka.MessageQueue.InMemory.csproj" />
+    <ProjectReference Include="..\..\src\Misaka.Extensions\Misaka.MessageQueue.Kafka\Misaka.MessageQueue.Kafka.csproj" />
     <ProjectReference Include="..\..\src\Misaka\Misaka.csproj" />
   </ItemGroup>
 

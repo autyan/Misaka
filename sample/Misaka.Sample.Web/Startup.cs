@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +9,10 @@ using Misaka.DependencyInject.Autofac;
 using Misaka.DependencyInjection;
 using Misaka.EntityFrameworkCore;
 using Misaka.MessageQueue;
-using Misaka.MessageQueue.InMemory;
+using Misaka.MessageQueue.Kafka;
 using Misaka.Sample.Web.Application;
+using System;
+using Misaka.Utility;
 
 namespace Misaka.Sample.Web
 {
@@ -30,9 +31,12 @@ namespace Misaka.Sample.Web
                                                      {
                                                          option.UseMySQL("server=47.101.138.31;database=misaka_framework;user=autyan;password=demo87#yq");
                                                      })
-                  .UseInMemoryQueue(option =>
+                  .UseKafkaMq(option =>
                                     {
                                         option.Topics = new[] {"Test"};
+                                        option.PublishServer = "47.101.138.31:9092";
+                                        option.ConsumerServers = new[] { "47.101.138.31:9092" };
+                                        option.GroupName = ApplicationUtility.GetCurrentApplicationName();
                                     });
         }
 

@@ -4,6 +4,11 @@ namespace Misaka.MessageQueue.Kafka
 {
     internal class KafkaMessage
     {
+        public KafkaMessage()
+        {
+
+        }
+
         public KafkaMessage(object message, 
                             string messageKey, 
                             string host,
@@ -16,14 +21,14 @@ namespace Misaka.MessageQueue.Kafka
             App         = app;
         }
 
-        public string MessageType { get; }
+        public string MessageType { get; protected set; }
 
-        public string MessageBody { get; }
+        public string MessageBody { get; protected set; }
 
-        public string MessageKey { get; }
+        public string MessageKey { get; protected set; }
 
-        public string Host { get; }
+        public string Host { get; protected set; }
 
-        public string App { get; set; }
+        public string App { get; protected set; }
     }
 }

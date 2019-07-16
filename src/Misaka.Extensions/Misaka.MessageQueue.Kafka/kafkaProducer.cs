@@ -1,4 +1,5 @@
-﻿using Confluent.Kafka;
+﻿using System;
+using Confluent.Kafka;
 using Microsoft.Extensions.Options;
 using Misaka.Extensions.Json;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Misaka.MessageQueue.Kafka
             _kafkaProducer = new ProducerBuilder<string, string>(new ProducerConfig
                                                                  {
                                                                      BootstrapServers = option1.PublishServer,
-                                                                     Partitioner = Partitioner.Murmur2Random
+                                                                     //Partitioner = Partitioner.Murmur2Random
                                                                  })
                .Build();
         }
@@ -43,7 +44,7 @@ namespace Misaka.MessageQueue.Kafka
 
         private async Task DoPublishAsync(PublishContext context)
         {
-            await _kafkaProducer.ProduceAsync(context.Topic, new Message<string, string>
+            var dr = await _kafkaProducer.ProduceAsync(context.Topic, new Message<string, string>
                                                              {
                                                                  Key = context.Key,
                                                                  Value = new KafkaMessage(context.Message, 
@@ -51,6 +52,7 @@ namespace Misaka.MessageQueue.Kafka
                                                                                           _host,
                                                                                           _app).ToJson()
                                                              });
+            Console.WriteLine(dr);
         }
 
         public string Name { get; } = nameof(KafkaProducer);
