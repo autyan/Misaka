@@ -21,6 +21,6 @@ namespace Misaka.Utility
         }
 
         public static string GetCurrentApplicationName()
-            => Assembly.GetCallingAssembly().GetName().Name;
+            => Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
     }
 }
