@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.2-preview</Version>
+    <Version>0.0.4-preview</Version>
     <Authors>autyan</Authors>
     <Company>demo</Company>
     <Product>MisakaFramework</Product>
@@ -12,8 +12,11 @@
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Misaka.DependencyInject.Autofac" Version="0.0.1-Preview" />
-    <PackageReference Include="Misaka.Extensions.Json" Version="0.0.1-preview" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Misaka.DependencyInject.Autofac\Misaka.DependencyInject.Autofac.csproj" />
+    <ProjectReference Include="..\Misaka.Extensions.Json\Misaka.Extensions.Json.csproj" />
   </ItemGroup>
 
 </Project>

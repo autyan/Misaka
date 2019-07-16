@@ -36,7 +36,7 @@ namespace Misaka.Config
 
         public static Configuration LoadComponent(this Configuration config, string prefix)
         {
-            var files = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException());
+            var files = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? throw new InvalidOperationException());
             var validFiles = files.Where(f => f.EndsWith(".dll")).Select(Path.GetFileNameWithoutExtension).Where(n => n.StartsWith(prefix));
             TypeProvider.Instance.LoadFromAssemblies(validFiles.Select(Assembly.Load).ToArray());
 
