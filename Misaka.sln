@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misaka.MessageQueue.Kafka",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.Extensions.Json", "src\Misaka.Extensions\Misaka.Extensions.Json\Misaka.Extensions.Json.csproj", "{A8EE1508-324D-4D7C-A48A-B10CF9096F79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misaka.Extensions.AspNet", "Misaka.Extensions.AspNet\Misaka.Extensions.AspNet.csproj", "{D64AA421-27D4-4900-9E45-83D2FD22D0D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{A8EE1508-324D-4D7C-A48A-B10CF9096F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8EE1508-324D-4D7C-A48A-B10CF9096F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8EE1508-324D-4D7C-A48A-B10CF9096F79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D64AA421-27D4-4900-9E45-83D2FD22D0D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D64AA421-27D4-4900-9E45-83D2FD22D0D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D64AA421-27D4-4900-9E45-83D2FD22D0D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D64AA421-27D4-4900-9E45-83D2FD22D0D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{45211E6F-B5B1-41B1-A21B-76099EBAAC38} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 		{B2422992-3ADB-401C-BF11-98C3855D1172} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 		{A8EE1508-324D-4D7C-A48A-B10CF9096F79} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
+		{D64AA421-27D4-4900-9E45-83D2FD22D0D0} = {16E7EA15-53C7-436F-AD97-FE0E68CE3F94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC0FDE98-1713-4C86-B12F-7A585EE9E496}
